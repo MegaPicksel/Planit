@@ -24,7 +24,7 @@ Python is required to run and use this project as a developer.
 If you are using a Linux distro or a Mac you will need to put the project into a python 3 virtualenv as Python 2.7 (comes with all Linux and Apple computers, and is the default) might cause unexpected behaviour.
 On Windows a virtualenv is not required but is recommended.
 ---------------------------------------------------------------------------------------------------------------------
-BACKGEOUND IMAGE:
+BACKGROUND IMAGE:
 ------------------
 The background image seen on pages prior to login comes from https://www.pexels.com/
 The license of the image allows for personal and commercial use without attribution.
