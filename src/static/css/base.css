@@ -1,0 +1,240 @@
+ @media(max-width: 899.9px){
+ 	#body_outside{
+ 		background-color: #2864F9; 
+ 		background-image: none;
+ 	}
+}
+@media(min-width: 900px){
+	#body_outside{
+		background-color: #1C52D7; 
+		background-image: url('/static/css/images/milkyway.jpeg');
+		background-size: 100% auto;
+		background-repeat: no-repeat;
+		background-blend-mode: luminosity;
+		margin-top: 50px;
+	}
+}
+/* Navbar */
+.navbar{
+	background: #1C52D7; 
+}
+#under-nav{
+	background: #232ACF; 
+	height: 10px;
+}
+a.navbar-brand.custom{
+	color: #FFFFFF; 
+	font-family: 'Signika', sans-serif;
+	font-size: 30px;
+	padding: 0px;
+}
+a.nav-link{
+	color: #FFFFFF; 
+	font-family: 'Arimo', sans-serif;
+}
+a.nav-link:hover{
+	color: #6BAAFA; #FFFFFF;
+}
+.navbar-toggler{
+	background-color: #29B6F6; 
+}
+.navbar-toggler-icon{
+	margin-bottom: 10px;
+	margin-right: 8px;
+	color: #4A148C;
+}
+/* Body */
+#body_inside{
+	background-color: #F9F9F9; 
+}
+#todo{
+	padding-right: 4px;
+}
+#weather{
+	padding-left: 4px;
+}
+p{
+	margin: 5px;
+}
+#table{
+	margin-top: 8px;
+	margin-bottom: 8px;
+}
+#account{
+	margin-top: 8px;
+}
+#edit{
+	font-family: 'Arimo', sans-serif;
+	color: #4ADF80;
+	margin-left: 20px;
+}
+#new{
+	color: #1C52D7; 
+}
+#edit:hover{
+	color: #2BA243;
+}
+#login_info{
+	margin-top: 20px;
+	color: #FFFFFF;
+	font-family: 'Signika', sans-serif;
+}
+#decider_text{
+	color: #FF5A20; 
+	margin-top: 50px;
+	font-family: 'Signika', sans-serif;
+}
+#login_planit{
+	font-family: 'Signika', sans-serif;
+}
+#name{
+	font-family: 'Signika', sans-serif;
+	margin: 0px;
+}
+.messages{
+	padding-left: 0px;
+}
+/* Fonts */
+#table-column{
+	font-family: 'Raleway', sans-serif;
+}
+#section{
+	font-family: 'Arimo', sans-serif;
+}
+li.list-group-item{
+  padding-bottom: 0px;
+  color: #FFFFFF;
+}
+/* Forms */
+#form{
+	margin-top: 8px;
+	background-color: #FFFFFF;
+	padding-top: 20px;
+	padding-bottom: 40px;
+}
+#form_outside{
+	margin-top: 30px;
+}
+form input{
+	border: 1px solid #1C52D7; 
+	border-radius: 2px;
+	width: 100%;
+}
+form textarea{
+	border: 1px solid #1C52D7;  
+	border-radius: 2px;
+	width: 100%;
+}
+form button{
+	width: 100%;
+	border: none;
+	border-radius: 1px;
+	background-color: #1C52D7; 
+}
+#form-button{
+	color: #FFFFFF;
+	-webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+}
+#form-button:hover{
+	background-color: #0B3973; 
+}
+#Todo-btn{
+	width: 10%;
+	border: none;
+	border-radius: 2px;
+	color: #FFFFFF;
+	background-color: #1C52D7; 
+}
+#Todo-btn{
+	-webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+}
+#Todo-btn:hover{
+	background-color: #0B3973; 
+}
+#icon{
+	color: #232ACF;  
+}
+.fa-lock{
+	margin-right: 2px;
+}
+#TodoInfo-link{
+	color: #1762E7;
+}
+#TodoInfo-link:hover{
+	color: #08398E;
+}
+#TodoUpdate-link{
+	color: #3DD45B;
+}
+#TodoUpdate-link:hover{
+	color: #2BA243;
+}
+#TodoDelete-link{
+	color: #E73232;
+}
+#TodoDelete-link:hover{
+	color: #EF0412;
+}
+#form-title{
+	color: #232ACF;
+	font-family: 'Arimo', sans-serif;
+}
+#delete{
+	color: #FFFFFF;
+	background-color: #D93618;
+}
+#delete:hover{
+	background-color: #C11717;
+}
+#error{
+	color: #D93618;
+}
+#planit{
+	color: #1C52D7;
+	font-family: 'Signika', sans-serif;
+	font-size: 30px;
+	padding: 0px;
+	border-bottom: 1px solid #062D8D;
+}
+#account_update{
+	color: #1C52D7;
+	border-bottom: 1px solid #1C52D7;
+	font-family: 'Arimo', sans-serif;
+}
+#account_info{
+	color: #FF5A20;
+	font-family: 'Arimo', sans-serif;
+}
+/* Modals */
+.modal-header{
+	background-color: #1C52D7;
+	font-family: 'Raleway', sans-serif;
+}
+.modal-title{
+	color: #FFFFFF;
+}
+.modal-footer{
+	border: None;
+}
+.custom_p{
+	font-family: 'Raleway', sans-serif;
+}
+.close{
+	color: #FFFFFF;
+	width: 50px;
+	padding: 0px;
+	float: right;
+}
+/*messages*/
+#success_message{
+	color: green;
+}
+#error_message{
+	color: #FF2F2F;
+}
+/* Footer */
+#footer{
+	border-top: 1px solid #232ACF; 
+}

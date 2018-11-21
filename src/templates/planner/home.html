@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+
+{% block ajax %}
+<script type="text/javascript">
+    $(document).ready(function(){
+      // Click functions.
+      function LoadClicks(){
+        $('#TodoList #TodoDelete-link').on('click', loadForm);
+        $('#masterModal').on('submit', '#TodoDelete', executeForm);
+
+        $('#TodoList #TodoUpdate-link').on('click', loadForm);
+        $('#masterModal').on('submit', '#TodoUpdate', executeForm);
+
+        $('#TodoList #TodoInfo-link').on('click', loadForm);
+      };
+      // load form
+      var loadForm = function(event){
+        event.preventDefault();
+        var btn = $(this);
+        $.ajax({
+            url: btn.attr("data-url"),
+            type: 'get',
+            dataType: 'json',
+            beforeSend: function(data){
+              console.log(data)
+                $('#masterModal').modal('show')
+            },
+            success: function(data){
+                $('#masterModal .modal-content').html(data.html_data)
+            },
+        });
+      };
+      // Execute a loaded TodoForm.
+      var executeForm = function(event){
+        event.preventDefault();
+        var form = $(this);
+        $.ajax({
+            url: form.attr('action'),
+            data: form.serialize(),
+            type: form.attr('method'),
+            dataType: 'json',
+            success: function(data){
+                if (data.operation_is_valid){
+                    $('#masterModal').modal('hide');
+                    $('#TodoList').html(data.html_data);
+                    LoadClicks();
+                }
+                else{
+
+                    $('#masterModal').modal('hide');
+                    alert("There was an error! Please try again.");
+                    $('#TodoList').html(data.html_data);
+                }
+              }
+          });
+        };
+        // Weather API ajax call.
+      //$('#WeatherForm').on('submit', function(event){
+        //event.preventDefault();
+        function WeatherInfo(){
+            $.ajax({
+                //data: form.serialize(),
+                url: /weather/,
+                type: 'get',
+                dataType: 'json',
+                success: function(data){
+                  //$('#WeatherForm')[0].reset();
+                    var city = data.city
+                    var icon = data.icon
+                    var temp = data.temp
+                    var humidity = data.humidity
+                    var wind = data.wind
+                  $('#weather #content').append('<p>'+'<strong>'+city+'</strong>'+'</p>')
+                  $('#weather #content').append("<img src=http://openweathermap.org/img/w/"+icon+".png>")
+                  $('#weather #temperature').append('<h3>'+temp+'&#8451;'+'</h3>')
+                  $('#weather #content').append('<p>'+'Humidity: '+humidity+'%'+'</p>')
+                  $('#weather #content').append('<p>'+'Wind speed: '+wind+'km/h'+'</p>')
+                }
+            })
+        }
+      //});
+
+      LoadClicks();
+      WeatherInfo();
+      // Add a task to todo list.
+      $('#Todo-btn').on('click', loadForm);
+      $('#masterModal').on('submit', '#TodoForm', executeForm);
+
+  });
+</script>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+     <div id="table" class="table-responsive border shadow-sm p-3 bg-white">
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+              {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                <p id="success_message"><i class="fas fa-check-circle"></i>{{message}}</p>
+              {% endif %}
+              {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                <p id="error_message"><i class="fas fa-times-circle"></i>{{message}}</p>
+              {% endif %}
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <div class="row">
+          <div class="col-sm-6">
+            <h5 id="section"><i id="icon" class="fas fa-utensils"></i> Dinner Plan:</h5>
+          </div>
+          <div class="col-sm-6">
+            <h5 id="name" class="d-flex justify-content-end">Welcome {{user.first_name}}!</h5>
+          </div>
+        </div>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th id="table-column" style="width: 12.5%">Monday</th>
+              <th id="table-column" style="width: 12.5%">Tuesday</th>
+              <th id="table-column" style="width: 12.5%">Wednesday</th>
+              <th id="table-column" style="width: 12.5%">Thursday</th>
+              <th id="table-column" style="width: 12.5%">Friday</th>
+              <th id="table-column" style="width: 12.5%">Saturday</th>
+              <th id="table-column" style="width: 12.5%">Sunday</th>
+              <th id="table-column" style="width: 12.5%">Created</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if dinner_plan %}
+              {% for item in dinner_plan %}
+               <p><a id="new" href="{% url 'enter_plan' %}"><i class="fas fa-plus-square"></i> New</a> <a id="edit" href="{% url 'plan_update' item.pk %}"><i class="fas fa-edit"></i> Edit</a></p>
+                <p></p>
+                <td>{{item.Monday}}</td>
+                <td>{{item.Tuesday}}</td>
+                <td>{{item.Wednesday}}</td>
+                <td>{{item.Thursday}}</td>
+                <td>{{item.Friday}}</td>
+                <td>{{item.Saturday}}</td>
+                <td>{{item.Sunday}}</td>
+                <td>{{item.Timestamp}}</td>
+              {% endfor %}
+            {% else %}
+              <p><a id="new" href="{% url 'enter_plan' %}"><i class="fas fa-plus-square"></i> New</a>
+              <p>Click <strong>'Create' or New</strong> to create a dinner plan for the week.</p>
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+      <div class="row">
+        <div id="todo" class="col-sm-8">
+          <!-- Todo list -->
+          <div class="table-responsive border shadow-sm p-3 bg-white">
+            <h5 id="section"><i id="icon" class="fas fa-tasks"></i> Upcoming events:</h5>
+            <table id="TodoList" class="table">
+              {% include 'planner/todo_list.html' %}
+            </table>
+            <button id="Todo-btn" data-url="{% url 'todo' %}" data-toggle="modal" data-target="#TodoModal">
+              <i class="fas fa-plus"></i>
+            </button>
+          </div>
+        </div>
+        <div id="weather" class="col-sm-4">
+          <div class="container border h-100 shadow-sm p-3 bg-white">
+          <!-- Weather API -->
+            <h5 id="section"><i id="icon" class="fas fa-sun"></i> Weather:</h5>
+              <div id="weathermeta" class="row">
+                <div id="content" class="col-sm-8">
+                </div>
+                <div id="temperature" class="col-sm-4">
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+</div>
+<!--Master Modal-->
+<div class="modal fade" id="masterModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4">
+            <div id="form" class="container border shadow-sm p-3">
+                <h4 id="form-title" class="d-flex justify-content-center">Dinner plan for the week:</h4>
+                    <form method="POST" action="{% url 'enter_plan'%}">
+                        {% csrf_token %}
+                        <p class="custom_p">Monday:{{form.Monday}}</p>
+                        <p class="custom_p">Tuesday:{{form.Tuesday}}</p>
+                        <p class="custom_p">Wednesday:{{form.Wednesday}}</p>
+                        <p class="custom_p">Thursday:{{form.Thursday}}</p>
+                        <p class="custom_p">Friday:{{form.Friday}}</p>
+                        <p class="custom_p">Saturday:{{form.Saturday}}</p>
+                        <p class="custom_p">Sunday:{{form.Sunday}}</p>
+                        <br>
+                        <button id="form-button" type="submit">Create dinner plan</button>
+                    </form>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <h4 id="decider_text">You'll recieve an email copy of your dinner plan once completed.</h4>
+        </div>
+    </div>
+</div>
+{% endblock %}

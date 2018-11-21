@@ -1,0 +1,13 @@
+Hello,
+
+Here is your dinner plan for the week:
+
+Monday: {{ Monday }}
+Tuesday: {{ Tuesday }}
+Wednesday: {{ Wednesday }}
+Thursday: {{ Thursday }}
+Friday: {{ Friday }}
+Saturday: {{ Saturday }}
+Sunday: {{ Sunday }}
+
+We hope to see you soon, :).

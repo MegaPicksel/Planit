@@ -1,0 +1,7 @@
+Hello, 
+
+The following has come from a user of your website:
+
+Name: {{ Name }}
+Message: {{ Message }}
+Email: {{ Email}}

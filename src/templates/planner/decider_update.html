@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4">
+            <div id="form" class="container border shadow-sm p-3">
+                <h5 id="form-title">Edit plan for the week:</h5>
+                    <form method="POST" action="{% url 'plan_update' form.instance.pk%}">
+                        {% csrf_token %}
+                        <p class="custom_p">Monday:{{form.Monday}}</p>
+                        <p class="custom_p">Tuesday:{{form.Tuesday}}</p>
+                        <p class="custom_p">Wednesday:{{form.Wednesday}}</p>
+                        <p class="custom_p">Thursday:{{form.Thursday}}</p>
+                        <p class="custom_p">Friday:{{form.Friday}}</p>
+                        <p class="custom_p">Saturday:{{form.Saturday}}</p>
+                        <p class="custom_p">Sunday:{{form.Sunday}}</p>
+                        <br>
+                        <button id="form-button" type="submit">Edit dinner plan</button>
+                    </form>
+            </div>
+        </div>
+        <div class="col-sm-4"></div>
+    </div>
+</div>
+{% endblock %}

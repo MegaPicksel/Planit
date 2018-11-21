@@ -1,0 +1,33 @@
+{% extends 'users/base_users.html' %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4">
+            <h4 id="login_info"><span id="login_planit">Planit</span> is a mobile friendly task tracker, dinner planner and weather checker, designed for you and your family.</h4>
+        </div>
+        <div class="col-sm-4">
+            <div id="form" class="container border shadow-sm p-3">  
+                <div class="container">
+                    <h3 id="planit">Planit</h3>
+                    <h5 id="form-title">Login</h5>
+                        <form method="POST" action="{% url 'login' %}">
+                            {% csrf_token %}
+                            <p><i id="icon" class="fas fa-envelope"></i> {{form.username}}</p>
+                            <p><i id="icon" class="fas fa-lock"></i> {{form.password}}</p>
+                            {% if form.errors %}
+                                <p id="error"> Username or password incorrect</p>
+                            {% endif %}
+                            <br>
+                            <button id="form-button" type="submit">Login</button>
+                        </form>
+                        <br>
+                        <p class="custom_p">Don't have an account? <a href="{% url 'signup' %}">Sign up</a></p>
+                        <p class="custom_p">Forgot password? <a href="{% url 'password_reset' %}">Reset password</a></p>
+                </div>   
+            </div>
+        </div>
+        <div class="col-sm-4"></div>
+    </div>
+</div>
+{% endblock %}

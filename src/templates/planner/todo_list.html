@@ -1,0 +1,22 @@
+<thead>
+  <tr>
+    <th id="table-column" style="width: 25%">Task</th>
+    <th id="table-column" style="width: 25%">Due</th>
+    <th id="table-column" style="width: 16.5%">Info</th>
+    <th id="table-column" style="width: 16.5%">Edit</th>
+    <th id="table-column" style="width: 16.5%">Delete</th>
+  </tr>
+</thead>
+<tbody>
+  {% if todo_list %}
+    {% for todo in todo_list %}
+    <tr>
+        <td>{{ todo.Task }}</td>
+        <td>{{ todo.Due }}</td>
+        <td><a href="" id="TodoInfo-link" data-url="{% url 'todo_info' todo.id %}"><i class="fas fa-info-circle"></i></td>
+        <td><a href="" id="TodoUpdate-link" data-url="{% url 'todo_update' todo.id %}"><i class="fas fa-edit"></i></td>
+        <td><a href="" id="TodoDelete-link" data-url="{% url 'todo_delete' todo.id %}"><i class="fas fa-trash-alt"></i></a></td>
+    <tr>
+    {% endfor %}
+  {% endif %}
+</tbody>

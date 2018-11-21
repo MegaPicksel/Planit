@@ -1,0 +1,33 @@
+{% extends 'users/base_users.html' %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4">
+            <div id="form" class="container border shadow-sm p-3">
+                <div class="container">
+                    <h3 id="planit">Planit</h3>
+                    <h5 id="form-title">Sign up</h5>
+                        <form method="post" action="{% url 'signup' %}">
+                            {% csrf_token %}
+                            <div  class="fieldWrapper">
+                            {% for field in form %}
+                                {{ field.label_tag }} {{ field }}
+                                {% for error in field.errors %}
+                                    <p id="error" class="custom_p">*{{ error }}*</p> 
+                                {% endfor %} 
+                            {% endfor %}
+                            </div>
+                            <br>
+                            <button id="form-button" type="submit">Register</button>
+                        </form>
+                        <br>
+                        <p class="custom_p">Back to <a href="{% url 'login' %}">Login</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4"></div>
+    </div>
+</div>
+{% endblock %}
