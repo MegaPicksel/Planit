@@ -32,13 +32,15 @@ pip install django
 
 To download celery:
 * Note to Windows users, support for Windows was dropped for celery V4.0 and upwards, use V3.1.25 if on Windows.
+See Celery documentation on working with django. http://docs.celeryproject.org/en/latest/django/first-steps-with-django.html
 pip install django-celery
-pip install django-celery-email
-
-*To download rabbitMQ:
-*The download for rabbitMQ is system dependent, see the following link: https://www.rabbitmq.com/download.html
+pip install django-celery-
 
 To work with celery you will need to have the email backend set up with your host email address and password.
+
+To download rabbitMQ
+RabbitMQ is the message broker I am using, Redis could also be used, however the broker settings in settings.py will need to be adjusted.
+The download for rabbitMQ is system dependent, see the following link: https://www.rabbitmq.com/download.html
 
 Setting up a database other than sqlite3 is sopecific to the database management sytem you choose, 
 django supports both SQL and no-SQL databases.
