@@ -9,10 +9,10 @@ This project relies on the following technologies:
 ==================================================
 * Python 3
 * Django 2
-* celery (django-celery, and django-celery-email)
-* rabbitMQ
+* Celery (django-celery, and django-celery-email)
+* RabbitMQ
 * JQuery 3.3.1
-* Jquery UI
+* JQuery UI
 * Bootstrap 4 (CDN)
 * Font Awesome (CDN)
 * html5
@@ -24,14 +24,20 @@ Python is required to run and use this project as a developer.
 If you are using a Linux distro or a Mac you will need to put the project into a python 3 virtualenv as Python 2.7 (comes with all Linux and Apple computers, and is the default) might cause unexpected behaviour.
 On Windows a virtualenv is not required but is recommended.
 ---------------------------------------------------------------------------------------------------------------------
+BACKGEOUND IMAGE:
+------------------
+The background image seen on pages prior to login comes from https://www.pexels.com/
+The license of the image allows for personal and commercial use without attribution.
+see pexels licensing information: https://www.pexels.com/photo-license/
 
 To download the packages using pip:
 -----------------------------------
-To download django:
+To download Django:
 pip install django
+Django documentation: https://docs.djangoproject.com/en/2.1/
 
 To download celery:
-* Note to Windows users, support for Windows was dropped for celery V4.0 and upwards, use V3.1.25 if on Windows.
+Note to Windows users, support for Windows was dropped for celery V4.0 and upwards, use V3.1.25 if on Windows.
 See Celery documentation on working with django. http://docs.celeryproject.org/en/latest/django/first-steps-with-django.html
 pip install django-celery
 pip install django-celery-
