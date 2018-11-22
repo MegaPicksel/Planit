@@ -9,7 +9,7 @@ This project relies on the following technologies:
 ==================================================
 * Python 3
 * Django 2
-* Celery (django-celery, and django-celery-email)
+* Celery 3.1.25 (django-celery, and django-celery-email 1.1.5)
 * RabbitMQ
 * JQuery 3.3.1
 * JQuery UI
@@ -37,6 +37,7 @@ pip install django
 Django documentation: https://docs.djangoproject.com/en/2.1/
 
 To download celery:
+--------------------
 Note to Windows users, support for Windows was dropped for celery V4.0 and upwards, use V3.1.25 if on Windows.
 See Celery documentation on working with django. http://docs.celeryproject.org/en/latest/django/first-steps-with-django.html
 pip install django-celery
