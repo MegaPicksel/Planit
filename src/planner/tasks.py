@@ -2,7 +2,6 @@ from __future__ import absolute_import
 import datetime
 from celery import Celery
 from django.core.mail import send_mail
-#from celery.schedules import crontab
 from django.template import loader
 from .models import TodoList
 
