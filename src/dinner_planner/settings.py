@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+from celery.schedules import crontab
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -138,7 +139,7 @@ EMAIL_BACKEND = 'djcelery_email.backends.CeleryEmailBackend'
 EMAIL_USE_TLS =True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'django.testacc306@gmail.com'
-EMAIL_HOST_PASSWORD = 'eclipse208'
+EMAIL_HOST_PASSWORD = 'dre514mel'
 EMAIL_PORT = 587
 
 # Celery settings
@@ -152,3 +153,13 @@ CELERY_ACCEPT_CONTENT=['json']
 CELERY_TIMEZONE = 'Europe/Oslo'
 CELERY_ENABLE_UTC = True
 
+# Send reminder emails at midnight UTC for the events for the upcoming day.
+CELERYBEAT_SCHEDULE = {
+    'email-reminders': {
+        'task': 'planner.tasks.email_reminder',
+        'schedule': crontab(hour=7, minute=0),
+        'args':(),
+    },
+}
+
+CELERY_TIMEZONE = 'UTC'
