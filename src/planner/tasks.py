@@ -1,7 +1,10 @@
 from __future__ import absolute_import
+import datetime
 from celery import Celery
 from django.core.mail import send_mail
+#from celery.schedules import crontab
 from django.template import loader
+from .models import TodoList
 
 
 app = Celery('tasks', broker='amqp://guest:guest@localhost:5672/')
@@ -52,9 +55,21 @@ def contact_email(name, message, email):
     )
 
 
-
-
-
+@app.task
+def email_reminder():
+    reminders = TodoList.objects.filter(Due=datetime.date.today())
+    for reminder in reminders:
+        subject = reminder.Task
+        content = reminder.Info
+        from_email = 'django.testacc306@gmail.com'
+        to = [str(reminder.User)]
+        send_mail(
+            subject,
+            content,
+            from_email,
+            to,
+            fail_silently = False,
+        )
 
 
 
