@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '5cas*cbndl^m245iq^ylc)p%_)ycho3sd_o2w%p8)h-ftw*ob5'
+SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -138,8 +138,13 @@ LOGIN_URL = 'login'
 EMAIL_BACKEND = 'djcelery_email.backends.CeleryEmailBackend'
 EMAIL_USE_TLS =True
 EMAIL_HOST = 'smtp.gmail.com'
+<<<<<<< HEAD
 EMAIL_HOST_USER = 'django.testacc306@gmail.com'
 EMAIL_HOST_PASSWORD = 'dre514mel'
+=======
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+>>>>>>> 47baa615ca0e47bffbc4813f8ea8d54842ce73ad
 EMAIL_PORT = 587
 
 # Celery settings
