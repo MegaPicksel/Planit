@@ -138,13 +138,8 @@ LOGIN_URL = 'login'
 EMAIL_BACKEND = 'djcelery_email.backends.CeleryEmailBackend'
 EMAIL_USE_TLS =True
 EMAIL_HOST = 'smtp.gmail.com'
-<<<<<<< HEAD
-EMAIL_HOST_USER = 'django.testacc306@gmail.com'
-EMAIL_HOST_PASSWORD = 'dre514mel'
-=======
 EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
->>>>>>> 47baa615ca0e47bffbc4813f8ea8d54842ce73ad
 EMAIL_PORT = 587
 
 # Celery settings
