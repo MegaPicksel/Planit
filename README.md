@@ -32,24 +32,36 @@ see pexels licensing information: https://www.pexels.com/photo-license/
 
 To download the packages using pip:
 -----------------------------------
-To download Django:
+*To download Django:
 pip install django
 Django documentation: https://docs.djangoproject.com/en/2.1/
 
-To download celery:
+*Install requests:
+pip install request
+This module is needed for the weather feature as it uses a REST API, and requires 'requests'.
+
+To download Celery:
 --------------------
 Note to Windows users, support for Windows was dropped for celery V4.0 and upwards, use V3.1.25 if on Windows.
 See Celery documentation on working with django. http://docs.celeryproject.org/en/latest/django/first-steps-with-django.html
-pip install django-celery
-pip install django-celery-
+Django-Celery comes with the latest version of celery, however Django-Celery-Email has dependency issues with the latest version of Celery, thus the best combination is: django-celery 3.1.25, and django-celery-email 1.1.5.
+pip install django-celery==3.1.25
+pip install django-celery-email==1.1.5
 
 To work with celery you will need to have the email backend set up with your host email address and password.
 
-To download rabbitMQ
+To download RabbitMQ:
+---------------------
 RabbitMQ is the message broker I am using, Redis could also be used, however the broker settings in settings.py will need to be adjusted.
 The download for rabbitMQ is system dependent, see the following link: https://www.rabbitmq.com/download.html
+RabbitMQ will be enabled as soon as it's installed.(It will always be running as a daemon task, regardless of computer restarts)
 
+Database:
+---------
 Setting up a database other than sqlite3 is sopecific to the database management sytem you choose, 
 django supports both SQL and no-SQL databases.
+Once you run python manage.py makemigrations, and sqlite3 database will be initialised in your project.
+If you set it up like this initially and then decide to change to a RDMS, delete all migrations and delete the sqlite3 file, set up database backends (settings.py) for the database management system you want to use and then run python manage.py makemigrations, and migrate etc.
+https://docs.djangoproject.com/en/2.1/ref/databases/
 
 Thank you.
