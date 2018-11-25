@@ -1,12 +1,13 @@
 from django.urls import path, re_path
 from django.contrib.auth import views as auth_views
-from .views import (LoginView, SignUpView, LogoutView, HomeView, DinnerPlanView, DinnerPlanUpdateView,
+from .views import (LandingView, LoginView, SignUpView, LogoutView, HomeView, DinnerPlanView, DinnerPlanUpdateView,
                    AjaxTodoView, AjaxTodoUpdateView, AjaxTodoInfoView, AjaxTodoDeleteView, AjaxWeatherView, 
-                   ContactView, AccountView, AccountUpdateView)
+                   ContactView, ContactLandingView, AccountView, AccountUpdateView)
 
 
 urlpatterns = [
-    path('', LoginView.as_view(), name='login'),
+    path('', LandingView.as_view(), name='landing'),
+    path('login', LoginView.as_view(), name='login'),
     path('register/', SignUpView.as_view(), name='signup'),
     path('home/', HomeView.as_view(), name='home'),
     path('logout/', LogoutView.as_view(), name='logout'),
@@ -20,6 +21,7 @@ urlpatterns = [
     path('todo/<int:pk>/delete', AjaxTodoDeleteView.as_view(), name='todo_delete'),
     path('weather/', AjaxWeatherView.as_view(), name='weather'),
     path('contact/', ContactView.as_view(), name='contact'),
+    path('contact-landing/', ContactLandingView.as_view(), name='contact_landing'),
     path('password-reset/', auth_views.PasswordResetView.as_view(template_name='users/password_reset_form.html'), 
         name='password_reset'),
     path('password-reset/done', auth_views.PasswordResetDoneView.as_view(template_name='users/password_reset_done.html'), 
