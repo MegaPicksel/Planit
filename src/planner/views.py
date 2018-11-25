@@ -14,6 +14,9 @@ from .forms import LoginForm, DinnerDeciderForm, TodoForm, WeatherForm, ContactF
 from .tasks import plan_email, contact_email
 
 
+class LandingView(TemplateView):
+    template_name = 'users/landing.html'
+
 class SignUpView(CreateView):
     """ Note that the UserCreationForm comes from the custom user model."""
     template_name = 'users/registration.html'
@@ -53,7 +56,11 @@ class HomeView(LoginRequiredMixin, TemplateView):
         return context
 
 
-class DinnerPlanMixin:
+class DinnerPlanMixin(LoginRequiredMixin):
+    login_url = '/'
+    redirect_field_name = 'login'
+    form_class = DinnerDeciderForm
+    success_url = '/home/'
 
     def form_valid(self, form):
         form.instance.User = self.request.user
@@ -73,23 +80,15 @@ class DinnerPlanMixin:
         return super().form_valid(form) 
 
 
-class DinnerPlanView(LoginRequiredMixin, DinnerPlanMixin, CreateView):
+class DinnerPlanView(DinnerPlanMixin, CreateView):
     """ An email will be sent, via Celery, to the users email when they create a new dinner plan."""
-    login_url = '/'
-    redirect_field_name = 'login'
-    form_class = DinnerDeciderForm
-    success_url = '/home/'
     template_name = 'planner/decider.html'
 
 
-class DinnerPlanUpdateView(LoginRequiredMixin, DinnerPlanMixin, UpdateView):
+class DinnerPlanUpdateView(DinnerPlanMixin, UpdateView):
     """ Update an item in the dinner plan. """
-    login_url = '/'
-    redirect_field_name = 'login'
     template_name = 'planner/decider_update.html'
-    form_class = DinnerDeciderForm
     model = DinnerDecider
-    success_url = '/home/'
 
     def get_object(self): 
         return get_object_or_404(DinnerDecider, pk=self.kwargs["pk"])
@@ -202,14 +201,9 @@ class AjaxWeatherView(LoginRequiredMixin, TemplateView):
         return JsonResponse(data)
 
 
-class ContactView(LoginRequiredMixin, FormView):
-    """ Email is sent via celery."""
-    login_url = '/'
-    redirect_field_name = 'login'
+class ContactMixin(FormView):
     form_class = ContactForm
-    template_name = 'planner/contact.html'
-    success_url = '/home/'
-
+    
     def form_valid(self, form):
         name = form.cleaned_data['Name']
         message = form.cleaned_data['Message']
@@ -220,6 +214,18 @@ class ContactView(LoginRequiredMixin, FormView):
         except Exception:
             messages.error(self.request, "An error occured and your email was not sent, please try again.")
         return super().form_valid(form)
+
+class ContactView(LoginRequiredMixin, ContactMixin):
+    """ Email is sent via celery."""
+    login_url = '/'
+    redirect_field_name = 'login'
+    template_name = 'planner/contact.html'
+    success_url = '/home/'
+
+
+class ContactLandingView(ContactMixin):
+    template_name = 'users/contact_landing.html'
+    success_url = '/'
 
 
 class AccountView(LoginRequiredMixin, TemplateView):
