@@ -1,0 +1,25 @@
+{% extends 'users/base_users.html' %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4">   
+        </div>
+        <div class="col-sm-4">
+			<div id="form" class="container d-flex border justify-content-center shadow-sm p-3">
+				<form class="form" method="POST" action="{% url 'contact_landing' %}">
+					{% csrf_token %}
+					<h3 id="planit">Planit</h3>
+					<h4 id="form-title">Contact us:</h4>
+					<p class="custom_p">Name:{{form.Name}}</p> 
+					<p class="custom_p">Message:{{form.Message}}</p> 
+					<p class="custom_p">Email:{{form.Email}}</p> 
+					<br>
+					<button id="form-button" type="submit">Send</button>
+				</form>
+			</div>
+        </div>
+        <div class="col-sm-4"></div>
+    </div>
+</div>
+{% endblock %}
