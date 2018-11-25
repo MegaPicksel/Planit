@@ -10,7 +10,7 @@
 					<p>First name: {{item.first_name}}</p>
 					<p>Email: {{item.email}}</p>
 					<p>City: {{item.city}}</p>
-					<a href="{% url 'account_update' item.pk %}"><h5>Edit Info</h5></a>
+					<p><a id="account_edit" href="{% url 'account_update' item.pk %}"><i class="fas fa-edit"></i>Edit Info</a></p>
 				{% endfor %}
 			</div>
 		</div>
