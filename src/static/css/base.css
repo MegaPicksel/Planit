@@ -253,7 +253,8 @@ form button{
 }
 /* Footer */
 #footer{
-	border-top: 1px solid #232ACF; 
+	border-top: 1px solid #C4C4C4; 
+	width: 100%;
 	bottom: 0;
 }
 #outer_footer{
