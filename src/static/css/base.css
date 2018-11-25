@@ -3,10 +3,15 @@
  		background-color: #2864F9; 
  		background-image: none;
  	}
+ 	#todo{
+ 		padding-left: 4px;
+ 	}
+ 	#weather{
+ 		padding-right: 4px;
+ 	}
 }
 @media(min-width: 900px){
 	#body_outside{
-		background-color: #1C52D7; 
 		background-image: url('/static/css/images/milkyway.jpeg');
 		background-size: 100% auto;
 		background-repeat: no-repeat;
@@ -33,7 +38,7 @@ a.nav-link{
 	font-family: 'Arimo', sans-serif;
 }
 a.nav-link:hover{
-	color: #6BAAFA; #FFFFFF;
+	color: #6BAAFA; 
 }
 .navbar-toggler{
 	background-color: #29B6F6; 
@@ -46,6 +51,9 @@ a.nav-link:hover{
 /* Body */
 #body_inside{
 	background-color: #F9F9F9; 
+}
+#body_outside{
+	margin-top: 20px;
 }
 #todo{
 	padding-right: 4px;
@@ -68,11 +76,15 @@ p{
 	color: #4ADF80;
 	margin-left: 20px;
 }
+#edit:hover{
+	color: #2BA243;
+}
 #new{
 	color: #1C52D7; 
 }
-#edit:hover{
-	color: #2BA243;
+#account_edit{
+	font-family: 'Arimo', sans-serif;
+	color: #4ADF80;
 }
 #login_info{
 	margin-top: 20px;
@@ -93,6 +105,15 @@ p{
 }
 .messages{
 	padding-left: 0px;
+}
+#landing{
+	color: #232ACF;
+	font-family: 'Signika', sans-serif;
+	font-size: 100px;
+	padding: 0px;
+}
+#landing_page{
+	margin-top: 50px;
 }
 /* Fonts */
 #table-column{
