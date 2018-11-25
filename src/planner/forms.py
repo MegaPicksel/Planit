@@ -42,7 +42,7 @@ class WeatherForm(forms.Form):
 
 class ContactForm(forms.Form):
     Name = forms.CharField(label='')
-    Message = forms.CharField(label='', widget=forms.Textarea())
+    Message = forms.CharField(label='', widget=forms.Textarea(attrs={'cols':40, 'rows': 8}))
     Email = forms.CharField(label='')
     user = User
 

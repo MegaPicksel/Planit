@@ -15,7 +15,7 @@
 		background-image: url('/static/css/images/milkyway.jpeg');
 		background-size: 100% auto;
 		background-repeat: no-repeat;
-		margin-top: 50px;
+		margin-top: 20px;
 	}
 }
 /* Navbar */
@@ -50,9 +50,6 @@ a.nav-link:hover{
 /* Body */
 #body_inside{
 	background-color: #F9F9F9; 
-}
-#body_outside{
-	margin-top: 20px;
 }
 #todo{
 	padding-right: 4px;
@@ -257,4 +254,11 @@ form button{
 /* Footer */
 #footer{
 	border-top: 1px solid #232ACF; 
+	bottom: 0;
+}
+#outer_footer{
+	color: #FFFFFF;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
 }
