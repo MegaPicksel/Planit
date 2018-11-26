@@ -44,9 +44,9 @@ To download Celery:
 --------------------
 Note to Windows users, support for Windows was dropped for celery V4.0 and upwards, use V3.1.25 if on Windows.
 See Celery documentation on working with django. http://docs.celeryproject.org/en/latest/django/first-steps-with-django.html
-Django-Celery comes with the latest version of celery, however Django-Celery-Email has dependency issues with the latest version of Celery, thus the best combination is: django-celery 3.1.25, and django-celery-email 1.1.5.
-pip install django-celery==3.1.25
-pip install django-celery-email==1.1.5
+Django-Celery comes with Celery3.1.26, and is needed if you want to be able to interact with Celery and manage periodic tasks via the Django admin. You can upgrade to Celery 4.0 +, but then you'll need django-celery-beat, and this will need to be inculded in installed apps. With Celery 3.1.25, django-celery-beat is not needed for periodic tasks.
+pip install django-celery
+pip install django-celery-email
 
 To work with celery you will need to have the email backend set up with your host email address and password.
 
