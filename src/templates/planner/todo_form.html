@@ -9,17 +9,16 @@
   <div class="modal-body">
   {% csrf_token %}
   <p class="custom_p">Task:</p>{{todo_form.Task}}
-  <p class="custom_p">Due:</p>{{todo_form.Due}}
+  <p class="custom_p">Date:</p>{{todo_form.Date}}
   <p class="custom_p">Extra Info:</p>{{todo_form.Info}}
   </div>
   <div class="modal-footer">
     <button id="form-button" type="submit">Add task</button>
   </div>
 </form>
-
 <script type="text/javascript">
-// Datepicker jquery
-$( function(){
-  $("#datepicker").datepicker();
+// Datepicker 
+$("#datepicker").datetimepicker({
+    format:'Y-m-d H:i'
 });
 </script>

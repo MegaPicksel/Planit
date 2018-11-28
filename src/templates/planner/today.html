@@ -1,0 +1,27 @@
+<div class="table-responsive border shadow-sm p-3">
+  <h5 id="section"><i id="icon" class="fas fa-calendar-check"></i> Today's appointments:</h5>
+  <table class="table">
+    <thead>
+      <tr>
+        <th id="table-column" style="width: 12.5%">Appointment</th>
+        <th id="table-column" style="width: 12.5%">Info</th>
+        <th id="table-column" style="width: 12.5%">Time</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if today %}
+        {% for item in today %}
+          <tr>
+            <td>{{item.Task}}</td>
+            <td>{{item.Info}}</td>
+            <td>{{item.Date.time}}</td>
+          </tr>
+        {% endfor %}
+        {% else %}
+          <tr>
+            <td>You don't have any appointments for today.</td>
+          </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>

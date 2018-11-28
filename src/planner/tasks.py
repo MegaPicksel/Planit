@@ -56,7 +56,9 @@ def contact_email(name, message, email):
 
 @app.task
 def email_reminder():
-    reminders = TodoList.objects.filter(Due=datetime.date.today())
+    date = datetime.datetime.today()
+    reminders = TodoList.objects.filter(Date__year=date.year, Date__month=date.month, 
+                                        Date__day=date.day)
     for reminder in reminders:
         subject = reminder.Task
         content = reminder.Info

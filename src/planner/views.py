@@ -1,4 +1,5 @@
 import requests
+import datetime
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
@@ -14,8 +15,15 @@ from .forms import LoginForm, DinnerDeciderForm, TodoForm, WeatherForm, ContactF
 from .tasks import plan_email, contact_email
 
 
+class LoginMixin(LoginRequiredMixin):
+    """ Any View that requires Login to be accessed inherits from this mixin."""
+    login_url = '/'
+    redirect_field_name = 'login'
+
+
 class LandingView(TemplateView):
     template_name = 'users/landing.html'
+
 
 class SignUpView(CreateView):
     """ Note that the UserCreationForm comes from the custom user model."""
@@ -41,24 +49,36 @@ class LogoutView(View):
         return redirect('login')
 
 
-class HomeView(LoginRequiredMixin, TemplateView):
-    login_url = '/'
-    redirect_field_name = 'login'
+class HomeView(LoginMixin, TemplateView):
     template_name = 'planner/home.html'
+    date = datetime.datetime.today()
 
     def get_context_data(self, **kwargs):
         context = {
             'todo_form': TodoForm,
             'user': self.request.user,
             'dinner_plan': DinnerDecider.objects.filter(User=self.request.user).order_by('-Timestamp')[:1],
-            'todo_list': TodoList.objects.filter(User=self.request.user).order_by('Due'),
+            'today': TodoList.objects.filter(User=self.request.user).filter(Date__year=self.date.year, 
+                                             Date__month=self.date.month, Date__day=self.date.day),
+            'todo_list': TodoList.objects.filter(User=self.request.user).order_by('Date'),
         }
         return context
 
 
-class DinnerPlanMixin(LoginRequiredMixin):
-    login_url = '/'
-    redirect_field_name = 'login'
+class TodayAjaxView(LoginMixin, TemplateView):
+    """ Creates the section that displays todays appointments."""
+    template_name = 'planner/today.html'
+    date = datetime.datetime.today()
+
+    def get(self, request):
+        data = dict()
+        today=TodoList.objects.filter(User=self.request.user).filter(Date__year=self.date.year, 
+                                      Date__month=self.date.month, Date__day=self.date.day)
+        data['html_data'] = render_to_string(self.template_name, {'today': today})     
+        return JsonResponse(data)
+
+
+class DinnerPlanMixin(LoginMixin):
     form_class = DinnerDeciderForm
     success_url = '/home/'
 
@@ -94,13 +114,11 @@ class DinnerPlanUpdateView(DinnerPlanMixin, UpdateView):
         return get_object_or_404(DinnerDecider, pk=self.kwargs["pk"])
 
 
-class AjaxTodoView(LoginRequiredMixin, CreateView):
+class AjaxTodoView(LoginMixin, CreateView):
     """ Create a task, this view responds to an ajax call. 
     The view supplies a form (displayed in a modal, hence the get method), 
     and submits it if valid, otherwise the javascript will display an alert informing 
     the user of the error. """
-    login_url = '/'
-    redirect_field_name = 'login'
     form_class = TodoForm
 
     def get(self, form):
@@ -118,16 +136,14 @@ class AjaxTodoView(LoginRequiredMixin, CreateView):
         data = dict()
         form.instance.User = self.request.user
         form.save()
-        todo_list = TodoList.objects.filter(User=self.request.user).order_by('Due')
+        todo_list = TodoList.objects.filter(User=self.request.user).order_by('Date')
         data['operation_is_valid'] = True
         data['html_data'] = render_to_string('planner/todo_list.html', {'todo_list': todo_list})
         return JsonResponse(data)
 
 
-class AjaxTodoUpdateView(LoginRequiredMixin, UpdateView):
+class AjaxTodoUpdateView(LoginMixin, UpdateView):
     """ Update a task in the todo list."""
-    login_url = '/'
-    redirect_field_name = 'login'
     model = TodoList
 
     def get(self, request, *args, **kwargs):
@@ -140,50 +156,42 @@ class AjaxTodoUpdateView(LoginRequiredMixin, UpdateView):
         data = dict()
         form = TodoForm(request.POST, instance=get_object_or_404(TodoList, pk=self.kwargs['pk']))
         form.save()
-        todo_list = TodoList.objects.filter(User=request.user).order_by('Due')
+        todo_list = TodoList.objects.filter(User=request.user).order_by('Date')
         data['operation_is_valid'] = True
         data['html_data'] = render_to_string('planner/todo_list.html', {'todo_list': todo_list})
         return JsonResponse(data)
 
 
-class AjaxTodoInfoView(LoginRequiredMixin, View):
-    """ Display extra information about a specific task in the todo list."""
-    login_url = '/'
-    redirect_field_name = 'login'
+class TodoDeleteMixin(LoginMixin):
 
     def get(self, request, *args, **kwargs):
         data = dict()
         self.todo = get_object_or_404(TodoList, pk=self.kwargs['pk'])
-        data['html_data'] = render_to_string('planner/todo_info.html', {'todo_info':self.todo}, request=self.request)
+        data['html_data'] = render_to_string(self.template_name, {'todo':self.todo}, request=self.request)
         return JsonResponse(data)
 
+class AjaxTodoInfoView(TodoDeleteMixin, View):
+    """ Display extra information about a specific task in the todo list."""
+    template_name = 'planner/todo_info.html'
 
-class AjaxTodoDeleteView(LoginRequiredMixin, DeleteView):
+
+class AjaxTodoDeleteView(TodoDeleteMixin, DeleteView):
     """ Delete a task from todo list, this view displays a 'confrim delete' modal, 
     if it is submitted, the corresponding object is deleted."""
-    login_url = '/'
-    redirect_field_name = 'login'
-
-    def get(self, request, *args, **kwargs):
-        data = dict()
-        self.todo = get_object_or_404(TodoList, pk=self.kwargs['pk'])
-        data['html_data'] = render_to_string('planner/todo_delete.html', {'todo':self.todo}, request=self.request)
-        return JsonResponse(data)
+    template_name = 'planner/todo_delete.html'
 
     def post(self, request, *args, **kwargs):
         data = dict()
         todo = get_object_or_404(TodoList, pk=self.kwargs['pk'])
         todo.delete()
-        todo_list = TodoList.objects.filter(User=request.user).order_by('Due')
+        todo_list = TodoList.objects.filter(User=request.user).order_by('Date')
         data['operation_is_valid'] = True
         data['html_data'] = render_to_string('planner/todo_list.html', {'todo_list': todo_list})
         return JsonResponse(data)     
 
 
-class AjaxWeatherView(LoginRequiredMixin, TemplateView):
+class AjaxWeatherView(LoginMixin, TemplateView):
     """FormView requires a template_name due to its inheritance from classes higher up in the inheritance tree."""
-    login_url = '/'
-    redirect_field_name = 'login'
     template_name = 'planner/home.html'
 
     def get(self, request):
@@ -215,23 +223,20 @@ class ContactMixin(FormView):
             messages.error(self.request, "An error occured and your email was not sent, please try again.")
         return super().form_valid(form)
 
-class ContactView(LoginRequiredMixin, ContactMixin):
+class ContactView(LoginMixin, ContactMixin):
     """ Email is sent via celery."""
-    login_url = '/'
-    redirect_field_name = 'login'
     template_name = 'planner/contact.html'
     success_url = '/home/'
 
 
 class ContactLandingView(ContactMixin):
+    """ Contact form seen by non-logged in users/non-registered users."""
     template_name = 'users/contact_landing.html'
     success_url = '/'
 
 
-class AccountView(LoginRequiredMixin, TemplateView):
+class AccountView(LoginMixin, TemplateView):
     """ Display account information. """
-    login_url = '/'
-    redirect_field_name = 'login'
     template_name = 'planner/account.html'
 
     def get_context_data(self, **kwargs):
@@ -241,10 +246,8 @@ class AccountView(LoginRequiredMixin, TemplateView):
         return context
 
 
-class AccountUpdateView(LoginRequiredMixin, UpdateView):
+class AccountUpdateView(LoginMixin, UpdateView):
     """ Allow users to edit their account information."""
-    login_url = '/'
-    redirect_field_name = 'login'
     form_class = UserChangeForm
     model = UserProfile
     success_url = '/home/'

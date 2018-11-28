@@ -7,7 +7,8 @@
  		padding-left: 4px;
  	}
  	#weather{
- 		padding-right: 4px;
+ 		padding-left: 15px;
+ 		padding-right: 15px;
  	}
 }
 @media(min-width: 900px){
@@ -16,6 +17,15 @@
 		background-size: 100% auto;
 		background-repeat: no-repeat;
 		margin-top: 20px;
+	}
+	#weather{
+		padding-left: 4px;
+	}
+	#today{
+		padding-right: 4px;
+	}
+	#todo{
+	padding-right: 4px;
 	}
 }
 /* Navbar */
@@ -50,12 +60,6 @@ a.nav-link:hover{
 /* Body */
 #body_inside{
 	background-color: #F9F9F9; 
-}
-#todo{
-	padding-right: 4px;
-}
-#weather{
-	padding-left: 4px;
 }
 p{
 	margin: 5px;

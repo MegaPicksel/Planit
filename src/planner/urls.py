@@ -1,8 +1,9 @@
 from django.urls import path, re_path
 from django.contrib.auth import views as auth_views
-from .views import (LandingView, LoginView, SignUpView, LogoutView, HomeView, DinnerPlanView, DinnerPlanUpdateView,
-                   AjaxTodoView, AjaxTodoUpdateView, AjaxTodoInfoView, AjaxTodoDeleteView, AjaxWeatherView, 
-                   ContactView, ContactLandingView, AccountView, AccountUpdateView)
+from .views import (LandingView, LoginView, SignUpView, LogoutView, HomeView, TodayAjaxView, DinnerPlanView, 
+                    DinnerPlanUpdateView, AjaxTodoView, AjaxTodoUpdateView, AjaxTodoInfoView, 
+                    AjaxTodoDeleteView, AjaxWeatherView, ContactView, ContactLandingView, AccountView, 
+                    AccountUpdateView)
 
 
 urlpatterns = [
@@ -10,6 +11,7 @@ urlpatterns = [
     path('login', LoginView.as_view(), name='login'),
     path('register/', SignUpView.as_view(), name='signup'),
     path('home/', HomeView.as_view(), name='home'),
+    path('today/', TodayAjaxView.as_view(), name='today'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('create/', DinnerPlanView.as_view(), name='enter_plan'),
     path('create/<int:pk>/update', DinnerPlanUpdateView.as_view(), name='plan_update'),

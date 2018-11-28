@@ -6,6 +6,8 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 
+TIME_CHOICES = ('00:00', '01:00')
+
 class LoginForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'email'}))
     password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'password'}))
@@ -24,13 +26,14 @@ class DinnerDeciderForm(forms.ModelForm):
 
 class TodoForm(forms.ModelForm):
     Task = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'Enter a task'}))
-    Due = forms.DateField(label='', widget=forms.DateInput(attrs={'id': 'datepicker', 'autocomplete':'off', 
-                                                                  'placeholder': 'Due by'}))
-    Info = forms.CharField(label='', widget=forms.Textarea(attrs={'placeholder': 'Add aditional info'}))
-
+    Date = forms.DateTimeField(label='', widget=forms.DateInput(attrs={'id':'datepicker', 'autocomplete':'off',
+                                                                   'placeholder': 'Enter a date and time'}))
+    Info = forms.CharField(label='', widget=forms.Textarea(attrs={'placeholder': 'Add aditional info', 
+                                                                                'cols':40, 'rows': 8}))
+    
     class Meta:
         model = TodoList
-        fields = ('Task', 'Due', 'Info')
+        fields = ('Task', 'Date', 'Info')
 
 
 class WeatherForm(forms.Form):

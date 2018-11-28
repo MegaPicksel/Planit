@@ -44,6 +44,7 @@
                     $('#masterModal').modal('hide');
                     $('#TodoList').html(data.html_data);
                     LoadClicks();
+                    Today();
                 }
                 else{
 
@@ -51,34 +52,40 @@
                     alert("There was an error! Please try again.");
                     $('#TodoList').html(data.html_data);
                 }
-              }
-          });
-        };
-        // Weather API ajax call.
-      //$('#WeatherForm').on('submit', function(event){
-        //event.preventDefault();
-        function WeatherInfo(){
-            $.ajax({
-                //data: form.serialize(),
-                url: /weather/,
-                type: 'get',
-                dataType: 'json',
-                success: function(data){
-                  //$('#WeatherForm')[0].reset();
-                    var city = data.city
-                    var icon = data.icon
-                    var temp = data.temp
-                    var humidity = data.humidity
-                    var wind = data.wind
-                  $('#weather #content').append('<p>'+'<strong>'+city+'</strong>'+'</p>')
-                  $('#weather #content').append("<img src=http://openweathermap.org/img/w/"+icon+".png>")
-                  $('#weather #temperature').append('<h3>'+temp+'&#8451;'+'</h3>')
-                  $('#weather #content').append('<p>'+'Humidity: '+humidity+'%'+'</p>')
-                  $('#weather #content').append('<p>'+'Wind speed: '+wind+'km/h'+'</p>')
-                }
-            })
-        }
-      //});
+            }
+        });
+      };
+      //Today Ajax call
+      function Today(){
+        $.ajax({
+            url: /today/,
+            type: 'get',
+            dataType: 'json',
+            success: function(data){
+              $('#today').html(data.html_data);
+            }
+        });
+      };
+      // Weather API ajax call.
+      function WeatherInfo(){
+        $.ajax({
+            url: /weather/,
+            type: 'get',
+            dataType: 'json',
+            success: function(data){
+                var city = data.city
+                var icon = data.icon
+                var temp = data.temp
+                var humidity = data.humidity
+                var wind = data.wind
+                $('#weather #content').append('<p>'+'<strong>'+city+'</strong>'+'</p>')
+                $('#weather #content').append("<img src=http://openweathermap.org/img/w/"+icon+".png>")
+                $('#weather #temperature').append('<h3>'+temp+'&#8451;'+'</h3>')
+                $('#weather #content').append('<p>'+'Humidity: '+humidity+'%'+'</p>')
+                $('#weather #content').append('<p>'+'Wind speed: '+wind+'km/h'+'</p>')
+            }
+        });
+      };
 
       LoadClicks();
       WeatherInfo();
@@ -92,7 +99,7 @@
 
 {% block body %}
 <div class="container">
-     <div id="table" class="table-responsive border shadow-sm p-3 bg-white">
+     <div id="table" class="table-responsive border shadow-sm p-3">
         {% if messages %}
         <ul class="messages">
             {% for message in messages %}
@@ -147,30 +154,37 @@
           </tbody>
         </table>
       </div>
-      <div class="row">
-        <div id="todo" class="col-sm-8">
+      <div id="table">
+        <div class="row">
           <!-- Todo list -->
-          <div class="table-responsive border shadow-sm p-3 bg-white">
-            <h5 id="section"><i id="icon" class="fas fa-tasks"></i> Upcoming events:</h5>
+          <div id="today" class="col-sm-8">
+            {% include 'planner/today.html' %}
+          </div>
+          <div id="weather" class="col-sm-4">
+            <div class="container border h-100 shadow-sm p-3"> 
+            <!-- Weather API -->
+              <h5 id="section"><i id="icon" class="fas fa-sun"></i> Weather:</h5>
+                <div id="weathermeta" class="row">
+                  <div id="content" class="col-sm-8">
+                  </div>
+                  <div id="temperature" class="col-sm-4">
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="todo">
+      <!-- Todo list -->
+        <div class="table-responsive border shadow-sm p-3">
+          <h5 id="section"><i id="icon" class="fas fa-tasks"></i> Upcoming events:</h5>
+          <p>A reminder email will be sent to you on days when a task is due.</p>
             <table id="TodoList" class="table">
               {% include 'planner/todo_list.html' %}
             </table>
             <button id="Todo-btn" data-url="{% url 'todo' %}" data-toggle="modal" data-target="#TodoModal">
               <i class="fas fa-plus"></i>
             </button>
-          </div>
-        </div>
-        <div id="weather" class="col-sm-4">
-          <div class="container border h-100 shadow-sm p-3 bg-white">
-          <!-- Weather API -->
-            <h5 id="section"><i id="icon" class="fas fa-sun"></i> Weather:</h5>
-              <div id="weathermeta" class="row">
-                <div id="content" class="col-sm-8">
-                </div>
-                <div id="temperature" class="col-sm-4">
-                </div>
-              </div>
-          </div>
         </div>
       </div>
 </div>
