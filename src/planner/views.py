@@ -53,14 +53,12 @@ class LogoutView(View):
 
 class HomeView(LoginMixin, TemplateView):
     template_name = 'planner/home.html'
-    date = datetime.date.today()
 
     def get_context_data(self, **kwargs):
         context = {
             'todo_form': TodoForm,
             'user': self.request.user,
             'dinner_plan': DinnerDecider.objects.filter(User=self.request.user).order_by('-Timestamp')[:1],
-            'today': TodoList.objects.filter(User=self.request.user).filter(Date__date=self.date),
             'todo_list': TodoList.objects.filter(User=self.request.user).order_by('Date'),
         }
         return context
@@ -69,11 +67,10 @@ class HomeView(LoginMixin, TemplateView):
 class TodayAjaxView(LoginMixin, TemplateView):
     """ Creates the section that displays todays appointments."""
     template_name = 'planner/today.html'
-    date = datetime.date.today()
 
     def get(self, request):
-        print(self.date)
         data = dict()
+        date = datetime.date.today()
         today=TodoList.objects.filter(User=self.request.user).filter(Date__date=self.date)
         data['html_data'] = render_to_string(self.template_name, {'today': today})     
         return JsonResponse(data)
