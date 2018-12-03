@@ -53,11 +53,7 @@ class LogoutView(View):
 
 class HomeView(LoginMixin, TemplateView):
     template_name = 'planner/home.html'
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> 6853584d43aa54c1632b8886409a3934dae43c4a
     def get_context_data(self, **kwargs):
         context = {
             'todo_form': TodoForm,
@@ -76,19 +72,13 @@ class TodayAjaxView(LoginMixin, TemplateView):
     template_name = 'planner/today.html'
 
     def get(self, request):
-<<<<<<< HEAD
         """ 
         date variable must be set each time the view is called, if set as a class attribute it gets set once
         causing the wrong date to be set for every day past the day that this script is first run on the server.
         """
         data = dict()
-        date = datetime.date.today()                
-        today=TodoList.objects.filter(User=self.request.user).filter(Date__date=date)
-=======
-        data = dict()
         date = datetime.date.today()
         today=TodoList.objects.filter(User=self.request.user).filter(Date__date=self.date)
->>>>>>> 6853584d43aa54c1632b8886409a3934dae43c4a
         data['html_data'] = render_to_string(self.template_name, {'today': today})     
         return JsonResponse(data)
 
