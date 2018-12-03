@@ -29,25 +29,25 @@
         <div class="collapse navbar-collapse justify-content-end" id="navToggler">
           <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'home' %}">Home</a>
+                <a class="nav-link" href="{% url 'home' %}"><i class="fas fa-home"></i> Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'enter_plan' %}">Create</a>
+                <a class="nav-link" href="{% url 'enter_plan' %}"><i class="fas fa-plus-square"></i> Create</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+                <a class="nav-link" href="{% url 'contact' %}"><i class="fas fa-file-contract"></i> Contact</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'account' %}">Account</a>
+                <a class="nav-link" href="{% url 'account' %}"><i class="fas fa-user"></i> Account</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                <a class="nav-link" href="{% url 'logout' %}"><i class="fas fa-power-off"></i> Logout</a>
             </li>
           </ul>
         </div>
     </div>
 </nav>
-<div id="under-nav" class="shadow"></div>
+<div id="under-nav" class="border-bottom shadow-sm"></div>
 <!-- body -->
 {% block body %}
 {% endblock %}
