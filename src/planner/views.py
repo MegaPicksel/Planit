@@ -53,28 +53,32 @@ class LogoutView(View):
 
 class HomeView(LoginMixin, TemplateView):
     template_name = 'planner/home.html'
-    date = datetime.date.today()
-
+    
     def get_context_data(self, **kwargs):
         context = {
             'todo_form': TodoForm,
             'user': self.request.user,
             'dinner_plan': DinnerDecider.objects.filter(User=self.request.user).order_by('-Timestamp')[:1],
-            'today': TodoList.objects.filter(User=self.request.user).filter(Date__date=self.date),
             'todo_list': TodoList.objects.filter(User=self.request.user).order_by('Date'),
         }
         return context
 
 
 class TodayAjaxView(LoginMixin, TemplateView):
-    """ Creates the section that displays todays appointments."""
+    """ 
+    Creates the section that displays todays appointments, because the ajax call for this view happens
+    on page load, HomeView does not need a queryset for this feature.
+    """
     template_name = 'planner/today.html'
-    date = datetime.date.today()
 
     def get(self, request):
-        print(self.date)
+        """ 
+        date variable must be set each time the view is called, if set as a class attribute it gets set once
+        causing the wrong date to be set for every day past the day that this script is first run on the server.
+        """
         data = dict()
-        today=TodoList.objects.filter(User=self.request.user).filter(Date__date=self.date)
+        date = datetime.date.today()                
+        today=TodoList.objects.filter(User=self.request.user).filter(Date__date=date)
         data['html_data'] = render_to_string(self.template_name, {'today': today})     
         return JsonResponse(data)
 
