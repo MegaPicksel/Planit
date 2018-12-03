@@ -30,20 +30,20 @@
 }
 /* Navbar */
 .navbar{
-	background: #1C52D7; 
+	background: #FFFFFF;  
 }
 #under-nav{
-	background: #232ACF; 
+	background: #FFFFFF;  
 	height: 10px;
 }
 a.navbar-brand.custom{
-	color: #FFFFFF; 
+	color: #1C52D7; 
 	font-family: 'Signika', sans-serif;
 	font-size: 30px;
 	padding: 0px;
 }
 a.nav-link{
-	color: #FFFFFF; 
+	color: #1C52D7; 
 	font-family: 'Arimo', sans-serif;
 }
 a.nav-link:hover{
@@ -59,7 +59,7 @@ a.nav-link:hover{
 }
 /* Body */
 #body_inside{
-	background-color: #F9F9F9; 
+	background-color: #E8E8E8;
 }
 p{
 	margin: 5px;
