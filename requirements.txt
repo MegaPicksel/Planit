@@ -1,0 +1,11 @@
+Versions of the technologies used when creating the project:
+------------------------------------------------------------
+Python 3.6
+Django 2.0.1
+Celery 3.1.25 (django-celery 3.2.2, and django-celery-email 1.1.5)
+RabbitMQ 3.7.9
+JQuery 3.3.1
+Bootstrap 4 (CDN)
+Font Awesome (CDN) 5.5.0
+html5
+css3
