@@ -1,103 +1,5 @@
 {% extends 'base.html' %}
 
-{% block ajax %}
-<script type="text/javascript">
-    $(document).ready(function(){
-      // Click functions.
-      function LoadClicks(){
-        $('#TodoList #TodoDelete-link').on('click', loadForm);
-        $('#masterModal').on('submit', '#TodoDelete', executeForm);
-
-        $('#TodoList #TodoUpdate-link').on('click', loadForm);
-        $('#masterModal').on('submit', '#TodoUpdate', executeForm);
-
-        $('#TodoList #TodoInfo-link').on('click', loadForm);
-      };
-      // load form
-      var loadForm = function(event){
-        event.preventDefault();
-        var btn = $(this);
-        $.ajax({
-            url: btn.attr("data-url"),
-            type: 'get',
-            dataType: 'json',
-            beforeSend: function(data){
-              console.log(data)
-                $('#masterModal').modal('show')
-            },
-            success: function(data){
-                $('#masterModal .modal-content').html(data.html_data)
-            },
-        });
-      };
-      // Execute a loaded TodoForm.
-      var executeForm = function(event){
-        event.preventDefault();
-        var form = $(this);
-        $.ajax({
-            url: form.attr('action'),
-            data: form.serialize(),
-            type: form.attr('method'),
-            dataType: 'json',
-            success: function(data){
-                if (data.operation_is_valid){
-                    $('#masterModal').modal('hide');
-                    $('#TodoList').html(data.html_data);
-                    LoadClicks();
-                    Today();
-                }
-                else{
-
-                    $('#masterModal').modal('hide');
-                    alert("There was an error! Please try again.");
-                    $('#TodoList').html(data.html_data);
-                }
-            }
-        });
-      };
-      //Today Ajax call
-      function Today(){
-        $.ajax({
-            url: /today/,
-            type: 'get',
-            dataType: 'json',
-            success: function(data){
-              $('#today').html(data.html_data);
-            }
-        });
-      };
-      // Weather API ajax call.
-      function WeatherInfo(){
-        $.ajax({
-            url: /weather/,
-            type: 'get',
-            dataType: 'json',
-            success: function(data){
-                var city = data.city
-                var icon = data.icon
-                var temp = data.temp
-                var humidity = data.humidity
-                var wind = data.wind
-                $('#weather #content').append('<p>'+'<strong>'+city+'</strong>'+'</p>')
-                $('#weather #content').append("<img src=http://openweathermap.org/img/w/"+icon+".png>")
-                $('#weather #temperature').append('<h3>'+temp+'&#8451;'+'</h3>')
-                $('#weather #content').append('<p>'+'Humidity: '+humidity+'%'+'</p>')
-                $('#weather #content').append('<p>'+'Wind speed: '+wind+'km/h'+'</p>')
-            }
-        });
-      };
-
-      LoadClicks();
-      WeatherInfo();
-      Today();
-      // Add a task to todo list.
-      $('#Todo-btn').on('click', loadForm);
-      $('#masterModal').on('submit', '#TodoForm', executeForm);
-
-  });
-</script>
-{% endblock %}
-
 {% block body %}
 <div class="container">
      <div id="table" class="table-responsive border shadow-sm p-3">
@@ -196,4 +98,99 @@
     </div>
   </div>
 </div>
+{% endblock %}
+
+{% block ajax %}
+<script type="text/javascript">
+      // Click functions.
+      function LoadClicks(){
+        $('#TodoList #TodoDelete-link').on('click', loadForm);
+        $('#masterModal').on('submit', '#TodoDelete', executeForm);
+
+        $('#TodoList #TodoUpdate-link').on('click', loadForm);
+        $('#masterModal').on('submit', '#TodoUpdate', executeForm);
+
+        $('#TodoList #TodoInfo-link').on('click', loadForm);
+      };
+      // load form
+      var loadForm = function(event){
+        event.preventDefault();
+        var btn = $(this);
+        $.ajax({
+            url: btn.attr("data-url"),
+            type: 'get',
+            dataType: 'json',
+            beforeSend: function(data){
+              console.log(data)
+                $('#masterModal').modal('show')
+            },
+            success: function(data){
+                $('#masterModal .modal-content').html(data.html_data)
+            },
+        });
+      };
+      // Execute a loaded TodoForm.
+      var executeForm = function(event){
+        event.preventDefault();
+        var form = $(this);
+        $.ajax({
+            url: form.attr('action'),
+            data: form.serialize(),
+            type: form.attr('method'),
+            dataType: 'json',
+            success: function(data){
+                if (data.operation_is_valid){
+                    $('#masterModal').modal('hide');
+                    $('#TodoList').html(data.html_data);
+                    LoadClicks();
+                    Today();
+                }
+                else{
+
+                    $('#masterModal').modal('hide');
+                    alert("There was an error! Please try again.");
+                    $('#TodoList').html(data.html_data);
+                }
+            }
+        });
+      };
+      //Today Ajax call
+      function Today(){
+        $.ajax({
+            url: /today/,
+            type: 'get',
+            dataType: 'json',
+            success: function(data){
+              $('#today').html(data.html_data);
+            }
+        });
+      };
+      // Weather API ajax call.
+      function WeatherInfo(){
+        $.ajax({
+            url: /weather/,
+            type: 'get',
+            dataType: 'json',
+            success: function(data){
+                var city = data.city
+                var icon = data.icon
+                var temp = data.temp
+                var humidity = data.humidity
+                var wind = data.wind
+                $('#weather #content').append('<p>'+'<strong>'+city+'</strong>'+'</p>')
+                $('#weather #content').append("<img src=http://openweathermap.org/img/w/"+icon+".png>")
+                $('#weather #temperature').append('<h3>'+temp+'&#8451;'+'</h3>')
+                $('#weather #content').append('<p>'+'Humidity: '+humidity+'%'+'</p>')
+                $('#weather #content').append('<p>'+'Wind speed: '+wind+'km/h'+'</p>')
+            }
+        });
+      };
+
+      LoadClicks();
+      WeatherInfo();
+      Today();
+      // Add a task to todo list.
+      $('#Todo-btn').on('click', loadForm);
+      $('#masterModal').on('submit', '#TodoForm', executeForm);
+</script>
 {% endblock %}
