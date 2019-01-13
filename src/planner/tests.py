@@ -13,29 +13,29 @@ class PlannerModelsTest(TestCase):
 	def create_user(self):
 		"""Creation of a user object."""
 		return UserProfile.objects.create(email='test@test.com',
-									 	  first_name='test',
-									      last_name='test2',
-									      city='testcity',
-									      password='password')
+						  first_name='test',
+						  last_name='test2',
+						  city='testcity',
+						  password='password')
 
 
 	def create_dinner_decider(self, monday='test', 
-									tuesday='test', 
-									wednesday='test', 
-									thursday='test', 
-									friday='test',
-									saturday='test',
-									sunday='test',
-									timestamp=datetime.datetime.now()):
+					tuesday='test', 
+					wednesday='test', 
+					thursday='test', 
+					friday='test',
+					saturday='test',
+					sunday='test',
+					timestamp=datetime.datetime.now()):
 		return DinnerDecider.objects.create(Monday=monday, 
-										    Tuesday=tuesday,
-										    Wednesday=wednesday,
-										    Thursday=thursday,
-										    Friday=friday,
-										    Saturday=saturday,
-										    Sunday=sunday,
-										    Timestamp=timestamp,
-										    User=self.create_user())
+						    Tuesday=tuesday,
+						    Wednesday=wednesday,
+						    Thursday=thursday,
+						    Friday=friday,
+						    Saturday=saturday,
+						    Sunday=sunday,
+						    Timestamp=timestamp,
+						    User=self.create_user())
 
 
 	def create_todo_list(self, task='test', date=datetime.datetime.now(), info='test info'):
