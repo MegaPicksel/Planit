@@ -19,7 +19,7 @@ from .tasks import plan_email, contact_email
 class LoginMixin(LoginRequiredMixin):
     """ Any View that requires Login to be accessed inherits from this mixin."""
     login_url = '/'
-    redirect_field_name = 'login'
+    redirect_field_name = '/login/'
 
 
 class LandingView(TemplateView):
