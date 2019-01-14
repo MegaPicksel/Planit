@@ -6,8 +6,6 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 
-TIME_CHOICES = ('00:00', '01:00')
-
 class LoginForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'email'}))
     password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'password'}))
@@ -34,13 +32,6 @@ class TodoForm(forms.ModelForm):
     class Meta:
         model = TodoList
         fields = ('Task', 'Date', 'Info')
-
-
-class WeatherForm(forms.Form):
-    City = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'Enter a city'}))
-
-    class Meta:
-        fields = ('City',)
 
 
 class ContactForm(forms.Form):
